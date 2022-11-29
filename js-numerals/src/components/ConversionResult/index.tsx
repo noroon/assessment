@@ -1,7 +1,7 @@
-import { ConversionContext } from '../../App';
+import { ConversionContext } from '../../context/conversionContext';
 import convertNumber from '../../functions/convertNumber';
 
-const Conversion = () => {
+const ConversionResult = () => {
   return (
     <ConversionContext.Consumer>
       {({ numberToConvert }) => {
@@ -14,4 +14,4 @@ const Conversion = () => {
   );
 };
 
-export default Conversion;
+export default ConversionResult;

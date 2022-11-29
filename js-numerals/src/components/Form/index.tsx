@@ -8,7 +8,7 @@ import {
   Container,
   Alert,
 } from '@mui/material';
-import { ConversionContext } from '../../App';
+import { ConversionContext } from '../../context/conversionContext';
 
 const Form = () => {
   const { setNumberToConvert } = useContext(ConversionContext);
@@ -21,6 +21,7 @@ const Form = () => {
 
     if (formInput === null || formInput === '') {
       setAlert('Please enter a number');
+      setNumberToConvert(NaN)
     } else {
       setAlert('');
       setNumberToConvert(Number(formInput));
@@ -59,7 +60,7 @@ const Form = () => {
             autoFocus
             inputProps={{ 'data-testid': 'form-input' }}
           />
-          {alert && <Alert severity="warning">{alert}</Alert>}
+          {alert && <Alert severity="warning" sx={{ mt: 1 }}>{alert}</Alert>}
           <Button
             type="submit"
             fullWidth
