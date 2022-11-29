@@ -1,4 +1,4 @@
-import { FormEvent, useContext } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import {
   Button,
   CssBaseline,
@@ -6,18 +6,25 @@ import {
   Box,
   Typography,
   Container,
+  Alert,
 } from '@mui/material';
 import { ConversionContext } from '../../App';
 
 const Form = () => {
   const { setNumberToConvert } = useContext(ConversionContext);
+  const [alert, setAlert] = useState('');
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
     const formInput = data.get('formInput');
-    setNumberToConvert(Number(formInput));
+
+    if (formInput === null || formInput === '') {
+      setAlert('Please enter a number');
+    } else {
+      setAlert('');
+      setNumberToConvert(Number(formInput));
+    }
   };
 
   return (
@@ -34,7 +41,13 @@ const Form = () => {
         <Typography component="h1" variant="h5">
           Convert a number
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box
+          component="form"
+          title="form"
+          onSubmit={handleSubmit}
+          noValidate
+          sx={{ mt: 1 }}
+        >
           <TextField
             required
             fullWidth
@@ -42,8 +55,11 @@ const Form = () => {
             id="formInput"
             name="formInput"
             autoComplete="formInput"
+            title="formInput"
             autoFocus
+            inputProps={{ 'data-testid': 'form-input' }}
           />
+          {alert && <Alert severity="warning">{alert}</Alert>}
           <Button
             type="submit"
             fullWidth
