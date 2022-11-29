@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useContext } from 'react';
 import {
   Button,
   CssBaseline,
@@ -7,14 +7,17 @@ import {
   Typography,
   Container,
 } from '@mui/material';
+import { ConversionContext } from '../../App';
 
 const Form = () => {
+  const { setNumberToConvert } = useContext(ConversionContext);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
     const formInput = data.get('formInput');
-    console.log(formInput);
+    setNumberToConvert(Number(formInput));
   };
 
   return (
