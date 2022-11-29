@@ -2,13 +2,13 @@ import { FormEvent, useContext, useState } from 'react';
 import {
   Button,
   CssBaseline,
-  TextField,
   Box,
   Typography,
   Container,
   Alert,
 } from '@mui/material';
 import { ConversionContext } from '../../context/conversionContext';
+import StyledTextField from './StyledTextField';
 
 const Form = () => {
   const { setNumberToConvert } = useContext(ConversionContext);
@@ -21,7 +21,7 @@ const Form = () => {
 
     if (formInput === null || formInput === '') {
       setAlert('Please enter a number');
-      setNumberToConvert(NaN)
+      setNumberToConvert(NaN);
     } else {
       setAlert('');
       setNumberToConvert(Number(formInput));
@@ -40,16 +40,16 @@ const Form = () => {
         }}
       >
         <Typography component="h1" variant="h5">
-          Convert a number
+          Enter a number to convert
         </Typography>
         <Box
           component="form"
           title="form"
           onSubmit={handleSubmit}
           noValidate
-          sx={{ mt: 1 }}
+          sx={{ mt: 4 }}
         >
-          <TextField
+          <StyledTextField
             required
             fullWidth
             type="number"
@@ -59,8 +59,13 @@ const Form = () => {
             title="formInput"
             autoFocus
             inputProps={{ 'data-testid': 'form-input' }}
+            variant="standard"
           />
-          {alert && <Alert severity="warning" sx={{ mt: 1 }}>{alert}</Alert>}
+          {alert && (
+            <Alert severity="warning" sx={{ mt: 2 }}>
+              {alert}
+            </Alert>
+          )}
           <Button
             type="submit"
             fullWidth
