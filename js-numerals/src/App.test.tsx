@@ -85,8 +85,13 @@ describe('App Component', () => {
             target: { value: '1999' },
           });
           click(getByRole('button'));
+
           expect(
             await findByText('one thousand nine hundred and ninety-nine'),
+          ).toBeInTheDocument();
+
+          expect(
+            await findByText('nineteen hundred and ninety-nine'),
           ).toBeInTheDocument();
         });
 

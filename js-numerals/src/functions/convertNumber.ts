@@ -56,4 +56,16 @@ const convertNumber = (number: number): string => {
   return str;
 };
 
-export default convertNumber;
+const convertNumberForBritishEnglish = (number: number): string => {
+  let str = '';
+  const regex = /^(\d{2})(\d{2})$/;
+  const n = ('0000' + String(number)).slice(-4).match(regex);
+  if (!n) return '';
+
+  str += oneDigitsAndTens[Number(n[1])] + 'hundred ';
+  str += (n[2] !== '00') ? (str !== '' ? 'and ' : '') + (oneDigitsAndTens[Number(n[2])] || twoDigits[Number(n[2][0])] + '-' + oneDigitsAndTens[Number(n[2][1])]) : '';
+
+  return str;
+};
+
+export { convertNumber, convertNumberForBritishEnglish };
