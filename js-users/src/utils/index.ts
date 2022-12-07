@@ -4,7 +4,8 @@ export function getErrorMessage(error: unknown) {
 }
 
 export function getformattedDate(date: string) {
-  return `${date.split('T')[0].replaceAll('-', '.')}. ${date
-    .split('T')[1]
-    .replace(/\.\S+/, '')}`;
+  const newDate = new Date(date);
+  newDate.setHours(newDate.getHours() + 1);
+
+  return newDate.toUTCString().replace(/\W\d+\W(?=GMT)\w*/, '');
 }

@@ -22,6 +22,7 @@ const PaginationComponent: FC<PaginationProps> = ({
       page={currentPage}
       count={numberOfPages}
       onChange={paginate}
+      color="primary"
       renderItem={(item) => <PaginationItem {...item} />}
     />
   );

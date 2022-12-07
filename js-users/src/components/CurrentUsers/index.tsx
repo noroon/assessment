@@ -1,4 +1,4 @@
-import { Grid, List, ListItem } from '@mui/material';
+import { Grid, List, ListItem, Button } from '@mui/material';
 import { FC } from 'react';
 import { User } from '../../types';
 import { getformattedDate } from '../../utils';
@@ -18,12 +18,15 @@ const CurrentUsers: FC<CurrentUserProps> = ({ currentUsers }) => {
               last_name: lastName,
             }: User) => (
               <ListItem key={id}>
-                <Grid container spacing={2}>
-                  <Grid item xs={8}>
+                <Grid container spacing={1}>
+                  <Grid item xs={8} md={8}>
                     <span>{`${firstName} ${lastName}`}</span>
                   </Grid>
-                  <Grid item>
+                  <Grid item xs={3} md={3}>
                     <span>{getformattedDate(createdAt)}</span>
+                  </Grid>
+                  <Grid item xs={1} md={1}>
+                    <Button variant="outlined" >Edit</Button>
                   </Grid>
                 </Grid>
               </ListItem>

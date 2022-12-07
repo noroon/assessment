@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Container } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import { User } from '../../types';
@@ -27,7 +27,7 @@ const UserList = () => {
         },
       };
       const res = await fetch(
-        `https://assessment-users-backend.herokuapp.com/users`,
+        `${process.env.REACT_APP_BASE_URL}users`,
         requestOptions,
       );
       const data = await res.json();
@@ -47,14 +47,14 @@ const UserList = () => {
   }, []);
 
   return (
-    <Box p="5">
+    <Container maxWidth="sm">
       <CurrentUsers currentUsers={currentUsers} />
       <PaginationComponent
         currentPage={currentPage}
         numberOfPages={numberOfPages}
         setCurrentPage={setCurrentPage}
       />
-    </Box>
+    </Container>
   );
 };
 
