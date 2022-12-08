@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import { Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import { User } from '../../types';
@@ -47,14 +47,14 @@ const UserList = () => {
   }, []);
 
   return (
-    <Container maxWidth="sm">
+    <Stack alignItems="center" maxWidth="sm" sx={{ p: 1 }}>
       <CurrentUsers currentUsers={currentUsers} />
       <PaginationComponent
         currentPage={currentPage}
         numberOfPages={numberOfPages}
         setCurrentPage={setCurrentPage}
       />
-    </Container>
+    </Stack>
   );
 };
 

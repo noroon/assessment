@@ -4,6 +4,9 @@ import { orange } from '@mui/material/colors';
 
 import UserList from './components/UserList';
 import New from './pages/New';
+import Edit from './pages/Edit';
+import Header from './components/Header';
+import { Box } from '@mui/system';
 
 const theme = createTheme({
   palette: {
@@ -16,12 +19,16 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<UserList />} />
-          <Route path="/new" element={<New />} />
-        </Routes>
-      </BrowserRouter>
+      <Box sx={{ margin: 'auto' }}>
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path="/" element={<UserList />} />
+            <Route path="/new" element={<New />} />
+            <Route path="/edit/:id" element={<Edit />} />
+          </Routes>
+        </BrowserRouter>
+      </Box>
     </ThemeProvider>
   );
 }

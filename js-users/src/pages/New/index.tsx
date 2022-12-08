@@ -1,4 +1,5 @@
 import {
+  Alert,
   Avatar,
   Box,
   Button,
@@ -8,10 +9,12 @@ import {
   Typography,
 } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { getErrorMessage } from '../../utils';
 
 const New = () => {
+  const formRef = useRef<HTMLFormElement>();
+  const [successAlert, setSuccessAlert] = useState(false)
   const [errorMessage, setErrorMessage] = useState({
     first_name: '',
     last_name: '',
@@ -19,6 +22,7 @@ const New = () => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setSuccessAlert(false)
     const formData = new FormData(event.currentTarget);
 
     const firstName = formData.get('first_name');
@@ -48,7 +52,8 @@ const New = () => {
       }
 
       if (res.ok) {
-        // form clear + navigate
+        if (formRef.current) formRef.current.reset();
+        setSuccessAlert(true)
       }
     } catch (error) {
       throw new Error(getErrorMessage(error));
@@ -72,7 +77,13 @@ const New = () => {
         <Typography component="h1" variant="h5">
           Add new user
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Box
+          component="form"
+          ref={formRef}
+          onSubmit={handleSubmit}
+          noValidate
+          sx={{ mt: 1 }}
+        >
           <TextField
             margin="normal"
             required
@@ -101,6 +112,9 @@ const New = () => {
             <Typography variant="caption" color="red" gutterBottom>
               {`Last name ${errorMessage.last_name[0]}`}
             </Typography>
+          )}
+          {successAlert && (
+            <Alert severity="success">The user is successfully added</Alert>
           )}
           <Button
             type="submit"
