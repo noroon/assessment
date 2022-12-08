@@ -1,59 +1,68 @@
-import { Grid, List, ListItem, Button } from '@mui/material';
-// import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
-import { FC } from 'react';
+import { Grid, List, ListItem, Button, IconButton } from '@mui/material';
+import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
+import { Dispatch, FC, SetStateAction } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { User } from '../../types';
-import { getformattedDate } from '../../utils';
+import { getErrorMessage, getformattedDate } from '../../utils';
 
-type CurrentUserProps = { currentUsers: User[] };
+type CurrentUserProps = {
+  currentUsers: User[];
+  click: number;
+  setClick: Dispatch<SetStateAction<number>>;
+};
 
-const CurrentUsers: FC<CurrentUserProps> = ({ currentUsers }) => {
-  // const columns: GridColDef[] = [
-  //   {
-  //     field: 'fullName',
-  //     headerName: 'Full name',
-  //     description: 'This column has a value getter and is not sortable.',
-  //     sortable: false,
-  //     width: 300,
-  //     valueGetter: (params: GridValueGetterParams) =>
-  //       `${params.row.first_name} ${params.row.last_name}`,
-  //   },
-  //   {
-  //     field: 'created_at',
-  //     headerName: 'Created at',
-  //     width: 200,
-  //   }
-  // ];
+const CurrentUsers: FC<CurrentUserProps> = ({
+  currentUsers,
+  click,
+  setClick,
+}) => {
+  const handleClick = async (id: string, status: string) => {
+    status = status ==='active' ? 'locked' : 'active';
+
+    try {
+      const requestOptions = {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status }),
+      };
+
+      await fetch(
+        `${process.env.REACT_APP_BASE_URL}users/${id}`,
+        requestOptions,
+      );
+
+      setClick(click + 1);
+    } catch (error) {
+      throw new Error(getErrorMessage(error));
+    }
+  };
 
   return (
     <>
-      {/* {currentUsers && (
-        <div style={{ height: 640, width: '100%' }}>
-          <DataGrid
-            rows={currentUsers}
-            columns={columns}
-            pageSize={10}
-            rowsPerPageOptions={[5]}
-            // checkboxSelection
-          />
-        </div>
-      )} */}
       {currentUsers && (
-        <List>
+        <List sx={{ width: '75%' }}>
           {currentUsers.map(
             ({
               id,
+              status,
               created_at: createdAt,
               first_name: firstName,
               last_name: lastName,
             }: User) => (
-              <ListItem key={id}>
+              <ListItem
+                key={id}
+                style={{
+                  textDecoration: status === 'locked' ? 'line-through' : 'none',
+                }}
+              >
                 <Grid container spacing={1}>
                   <Grid item xs={6} md={6}>
                     <span>{`${firstName} ${lastName}`}</span>
                   </Grid>
-                  <Grid item xs={5} md={5}>
+                  <Grid item xs={4} md={4}>
                     <span>{getformattedDate(createdAt)}</span>
                   </Grid>
                   <Grid item xs={1} md={1}>
@@ -64,6 +73,16 @@ const CurrentUsers: FC<CurrentUserProps> = ({ currentUsers }) => {
                     >
                       Edit
                     </Button>
+                  </Grid>
+                  <Grid item xs={1} md={1}>
+                    <IconButton
+                      size="large"
+                      color="primary"
+                      aria-label="lock user"
+                      onClick={() => handleClick(id, status)}
+                    >
+                      <LockTwoToneIcon sx={{ m: 'auto' }} />
+                    </IconButton>
                   </Grid>
                 </Grid>
               </ListItem>

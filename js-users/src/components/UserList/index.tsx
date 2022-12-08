@@ -9,6 +9,7 @@ import PaginationComponent from '../Pagination';
 const UserList = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [click, setClick] = useState(0);
 
   const usersPerPage = 10;
 
@@ -43,12 +44,16 @@ const UserList = () => {
   useEffect(() => {
     (async () => {
       setUsers([...(await getUsers())]);
-    })();
-  }, []);
+    })();    
+  }, [click]);
 
   return (
-    <Stack alignItems="center" maxWidth="sm" sx={{ p: 1 }}>
-      <CurrentUsers currentUsers={currentUsers} />
+    <Stack alignItems="center" sx={{ p: 1, m: 'auto' }}>
+      <CurrentUsers
+        currentUsers={currentUsers}
+        click={click}
+        setClick={setClick}
+      />
       <PaginationComponent
         currentPage={currentPage}
         numberOfPages={numberOfPages}

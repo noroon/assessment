@@ -6,13 +6,13 @@ const Header = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar  sx={{ width: '75%', m: 'auto' }}>
           <Box sx={{ flexGrow: 1 }}>
             <IconButton
               size="large"
               edge="start"
               color="inherit"
-              aria-label="menu"
+              aria-label="home"
               sx={{ mr: 2 }}
               to="/"
               component={RouterLink}
