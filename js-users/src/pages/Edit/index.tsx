@@ -36,7 +36,7 @@ const Edit = () => {
         `${process.env.REACT_APP_BASE_URL}users/${id}`,
         requestOptions,
       );
-
+      
       const data = await res.json();
       return data;
     } catch (error) {

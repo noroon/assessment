@@ -32,6 +32,7 @@ const UserList = () => {
         requestOptions,
       );
       const data = await res.json();
+      
       return data.sort(
         (obj: User, nextObj: User) =>
           -obj.created_at.localeCompare(nextObj.created_at),
@@ -42,9 +43,7 @@ const UserList = () => {
   };
 
   useEffect(() => {
-    (async () => {
-      setUsers([...(await getUsers())]);
-    })();    
+    getUsers().then((userList) => setUsers(userList));
   }, [click]);
 
   return (

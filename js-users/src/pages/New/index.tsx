@@ -50,7 +50,6 @@ const New = () => {
       if (res.status === 422) {
         setErrorMessage(data);
       }
-console.log(res);
 
       if (res.ok) {
         if (formRef.current) formRef.current.reset();
