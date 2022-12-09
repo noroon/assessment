@@ -18,7 +18,7 @@ const CurrentUsers: FC<CurrentUserProps> = ({
   setClick,
 }) => {
   const handleClick = async (id: string, status: string) => {
-    status = status ==='active' ? 'locked' : 'active';
+    status = status === 'active' ? 'locked' : 'active';
 
     try {
       const requestOptions = {
@@ -43,7 +43,7 @@ const CurrentUsers: FC<CurrentUserProps> = ({
   return (
     <>
       {currentUsers && (
-        <List sx={{ width: '75%' }}>
+        <List sx={{ width: '75%' }} data-testid="list-element">
           {currentUsers.map(
             ({
               id,
