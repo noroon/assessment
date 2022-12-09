@@ -9,11 +9,10 @@ import {
   Typography,
 } from '@mui/material';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import { FormEvent, useState, ChangeEvent } from 'react';
+import { FormEvent, useState, ChangeEvent, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { getErrorMessage } from '../../utils';
-import { useEffect } from 'react';
 
 const Edit = () => {
   const { id } = useParams();

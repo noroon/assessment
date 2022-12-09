@@ -1,4 +1,4 @@
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 import { User } from '../../types';
@@ -32,7 +32,7 @@ const UserList = () => {
         requestOptions,
       );
       const data = await res.json();
-      
+
       return data.sort(
         (obj: User, nextObj: User) =>
           -obj.created_at.localeCompare(nextObj.created_at),
@@ -47,7 +47,8 @@ const UserList = () => {
   }, [click]);
 
   return (
-    <Stack alignItems="center" sx={{ p: 1, m: 'auto' }}>
+    <Stack alignItems="center" sx={{ m: 'auto' }}>
+      <Typography variant="h5" sx={{ m: 2 }}>List of users</Typography>
       <CurrentUsers
         currentUsers={currentUsers}
         click={click}
